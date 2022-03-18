@@ -1,29 +1,23 @@
 const express = require('express');
+const User = require('../models/User');
 
 const router = express.Router();
 
-
-router.get('/', (req, res) => {
-    obj = {
-        name: "Harry",
-        email: "harry@gmail.com",
-        password: "codewithharry123",
-        method: 'get'
-    }
-    // res.json({
-    //     name: 'harry'
-    // })
-    res.json(obj)
-});
+// Create User Using => Post '/api/user/' Does't Required auth
 
 router.post('/', (req, res) => {
-    obj = {
-        name: "Harry",
-        email: "harry@gmail.com",
-        password: "codewithharry123",
-        method: 'post'
-    }
-    res.json(obj)
+    const user = User(req.body);
+    user.save();
+    console.log(req.body);
+    res.send(req.body)
+});
+
+router.get('/', (req, res) => {
+    const user = User(req.body);
+    user.save();
+    console.log(req.body);
+    // res.send('Harr World!')
+    res.send(req.body)
 });
 
 module.exports = router
