@@ -1,15 +1,14 @@
-const connectToMongo = require('./db')
+const connetToMongo = require('./db');
 const express = require('express')
 
-connectToMongo();
+connetToMongo();
 
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.use('/api/auth', require('./routes/auth'))
+app.use('/api/notes', require('./routes/notes'))
 
 app.listen(port, () => {
-  console.log(`inoteBook - Backend app listening on port ${port}`)
+  console.log(`iNoteBook - Backend app listening at http:/localhost/${port}`)
 })
