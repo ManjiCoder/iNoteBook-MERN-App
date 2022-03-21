@@ -22,5 +22,4 @@ const UserSchema = new Schema({
     },
 });
 const User = mongoose.model('user', UserSchema);
-// User.createIndexes(); // Commiting this because 2 indexes are formed
 module.exports = User;
