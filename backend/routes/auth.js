@@ -10,9 +10,9 @@ const jwt = require('jsonwebtoken');//  npm jwt for token
 
 const jwtSecretString = process.env.JWT_SECRET_STRING;
 
-// Create User Using => Post '/api/createUser/' No Login Required
+// Create User Using => Post '/api/auth/createUser/' No Login Required
 
-router.post('/', [
+router.post('/createUser', [
     body('name', 'Enter A Valid Email').isLength({ min: 3 }),
     body('email', 'Enter A Valid Email').isEmail(),
     body('password', 'Password Must Be Atleast 5 Characters').isLength({ min: 5 }),

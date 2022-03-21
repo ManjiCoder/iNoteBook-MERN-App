@@ -9,7 +9,7 @@ const port = 5000;
 app.use(express.json()); //  MiddleWare - If not use then console return undefined
 
 // Available Routes
-app.use('/api/createUser', require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/notes', require('./routes/notes'));
 
 app.listen(port, () => {
