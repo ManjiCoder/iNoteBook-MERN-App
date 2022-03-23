@@ -1,17 +1,14 @@
 const express = require('express');
 const User = require('../models/User');
-
+const fetchUser = require('../middleware/fetchUser');
 const router = express.Router();
-
 const { body, validationResult } = require('express-validator');    // npm validator
-
 const bcrypt = require('bcryptjs'); //  npm bcrypt for hashing data
 const jwt = require('jsonwebtoken');//  npm jwt for token
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
-// Create User Using => Post '/api/auth/createUser/' No Login Required
-
+// ROUTE 1: Create User Using => Post '/api/auth/createUser/' No Login Required
 router.post('/createUser', [
     body('name', 'Enter A Valid Email').isLength({ min: 3 }),
     body('email', 'Enter A Valid Email').isEmail(),
@@ -51,15 +48,16 @@ router.post('/createUser', [
         // res.json({authToken:authToken})===res.json({authToken})
         res.json({ authToken });
     } catch (err) {
-        res.status(500).json({
-            err: "Some error occurs",
-            message: err.message
-        })
+        // res.status(500).json({
+        //     err: "Internal Server Error ",
+        //     message: err.message
+        // })
+        console.log(err.message);
+        res.status(500).send("Internal Server Error");
     }
 });
 
-// Authenticate User Using => Post '/api/auth/login/' No Login Required
-
+// ROUTE 2: Authenticate A User Using => Post '/api/auth/login/' No Login Required
 router.post('/login', [
     body('email', 'Enter A Valid Email').isEmail(),
     body('password', 'Password Must Be Atleast 5 Characters').isLength({ min: 5 }),
@@ -96,11 +94,24 @@ router.post('/login', [
         res.json({ authToken });
 
     } catch (err) {
-        res.status(500).json({
-            err: "Some error occurs",
-            message: err.message
-        })
+        // res.status(500).json({
+        //     err: "Internal Server Error ",
+        //     message: err.message
+        // })
+        console.log(err.message);
+        res.status(500).send("Internal Server Error");
     }
 });
 
+// ROUTE 3: Get LoginIn User Details Using => POST '/api/auth/getuser/' Login Required
+router.post('/getUser', fetchUser, async (req, res) => {
+    try {
+        let userId = req.user.id;
+        const user = await User.findById(userId).select('-password');   //  finding user by userID & selecting all user data exceop PASSWORD
+        res.send(user)
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 module.exports = router;
