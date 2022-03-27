@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
 // ROUTE 1: Create User Using => Post '/api/auth/createUser/' No Login Required
 router.post('/createUser', [
-    body('name', 'Enter A Valid Email').isLength({ min: 3 }),
+    body('name', 'Enter A Valid Name').isLength({ min: 3 }),
     body('email', 'Enter A Valid Email').isEmail(),
     body('password', 'Password Must Be Atleast 5 Characters').isLength({ min: 5 }),
 ], async (req, res) => {
@@ -47,12 +47,12 @@ router.post('/createUser', [
         // console.log(user);   //  return hash password
         // res.json({authToken:authToken})===res.json({authToken})
         res.json({ authToken });
-    } catch (err) {
+    } catch (error) {
         // res.status(500).json({
         //     err: "Internal Server Error ",
         //     message: err.message
         // })
-        console.log(err.message);
+        console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -93,12 +93,12 @@ router.post('/login', [
         console.log(authToken);
         res.json({ authToken });
 
-    } catch (err) {
+    } catch (error) {
         // res.status(500).json({
-        //     err: "Internal Server Error ",
-        //     message: err.message
+        //     error: "Internal Server Error ",
+        //     message: error.message
         // })
-        console.log(err.message);
+        console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -109,9 +109,10 @@ router.post('/getUser', fetchUser, async (req, res) => {
         let userId = req.user.id;
         const user = await User.findById(userId).select('-password');   //  finding user by userID & selecting all user data exceop PASSWORD
         res.send(user)
-    } catch (err) {
-        console.log(err.message);
+    } catch (error) {
+        console.log(error.message);
         res.status(500).send("Internal Server Error");
     }
 })
+
 module.exports = router;

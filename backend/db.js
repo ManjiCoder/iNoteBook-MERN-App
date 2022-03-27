@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Environment Variable
-require('dotenv').config()
+require('dotenv').config({ path: "./config.env" });
 
 const mongoURL = process.env.MONGO_URL; // Connection String => Mongo Compass
 // console.log(mongoURL);
