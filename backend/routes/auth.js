@@ -73,14 +73,16 @@ router.post('/login', [
         let user = await User.findOne({ email });
         // If email not match
         if (!user) {
-            return res.status(400).json({ error: "User Does't exist with this email" });
+            return res.status(400).json({ error: "Please try to login with correct credentials" });
+            // return res.status(400).json({ error: "User Does't exist with this email" });
         }
 
         const passwordCompare = await bcrypt.compare(password, user.password);    // return Boolean
         console.log(passwordCompare);
         // If password not match
         if (!passwordCompare) {
-            return res.status(400).json({ error: "User Does't exist with this password" });
+            return res.status(400).json({ error: "Please try to login with correct credentials" });
+            // return res.status(400).json({ error: "User Does't exist with this password" });
         }
 
         // Sending Index from Mongodb to jwtData (Index === id)
