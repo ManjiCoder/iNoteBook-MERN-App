@@ -2,10 +2,7 @@ import { useState } from "react";
 import NoteContext from "./NotesContext";   //  Importing NoteContext
 
 const NoteState = (props) => {
-    // const state = {
-    //     "name": "Harry",
-    //     "class": "B"
-    // }
+
     const s1 = {
         "name": "Harry",
         "class": "B"
@@ -25,10 +22,9 @@ const NoteState = (props) => {
     return (
         <NoteContext.Provider value={{ state: state, update: update }}>
             {/* <NoteContext.Provider value={{ state, update }}>(Modern JavaScript)  === value={{ state: state, update: update }} */}
-            {/* <NoteContext.Provider value={state}> */}
             {props.children}
         </NoteContext.Provider>
     )
 }
 
-export default NoteState;
+export default NoteState;   //  Exporting NoteState

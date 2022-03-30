@@ -10,7 +10,6 @@ function About() {
 
   return (
     <div>About & My name is {a.state.name} & I am in class {a.state.class} </div>
-    // <div>About & My name is {a.name} & I am in class {a.class} </div>
   )
 }
 
